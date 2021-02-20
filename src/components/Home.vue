@@ -10,7 +10,7 @@
       :error="error"
       @closeError="error = null"
     />
-    <Input v-else :city="city" @search="searchWeather" />
+    <Input v-else @search="searchWeather" />
   </section>
 </template>
 
@@ -18,6 +18,7 @@
 import Input from "./Input.vue";
 import Error from "./Error.vue";
 import Weather from "./Weather.vue";
+import currentWeather from "./../stubs/currentWeather";
 
 export default {
   components: { Weather, Error, Input },
@@ -36,12 +37,12 @@ export default {
           this.error = res.message;
           break;
         default:
-          this.weather = res.weather;
+          this.weather = res;
       }
     },
     getWeatherFromApi(payload) {
       if (payload === "Moscow") {
-        return { weather: "good", cod: "200" };
+        return currentWeather;
       }
 
       return { cod: "404", message: "Not found" };

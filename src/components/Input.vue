@@ -25,14 +25,9 @@ export default {
 
 <style lang="scss">
 .search-form {
-  position: absolute;
   color: gray;
-  padding: 15px 0 0;
-  margin-top: 10px;
-  top: 35%;
-  left: 0%;
-  width: 100%;
   font-size: 1.5rem;
+  width: 100%;
 
   .search {
     width: 80%;

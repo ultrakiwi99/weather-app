@@ -2,23 +2,23 @@
   <section class="weather-wrapper">
     <nav class="controls">
       <section class="go-back" @click="$emit(`closeWeather`)">
-        -- Tallin
+        <span class="material-icons icon-back">west</span> Tallin
       </section>
-      <section class="switch">
-        OO
+      <section>
+        <span class="material-icons switch">toggle_off</span>
       </section>
     </nav>
     <p class="time">Tuesday, December 6th 2016</p>
     <p class="conditions">Light snow</p>
     <section class="info">
       <section class="temp">39F</section>
-      <section class="icon">FF</section>
+      <section class="icon"><i class="wi wi-day-sunny"></i></section>
       <section class="week">
         <table>
           <tbody>
             <tr>
               <td>Morning</td>
-              <td>45F</td>
+              <td>33F</td>
             </tr>
             <tr>
               <td>Day</td>
@@ -39,42 +39,42 @@
     <section class="next-days">
       <section class="day-weather">
         <p class="weekday">Tuesday</p>
-        <p class="icon">FF</p>
+        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
         <p class="temp">34F</p>
       </section>
       <section class="day-weather">
         <p class="weekday">Tuesday</p>
-        <p class="icon">FF</p>
+        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
         <p class="temp">34F</p>
       </section>
       <section class="day-weather">
         <p class="weekday">Tuesday</p>
-        <p class="icon">FF</p>
+        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
         <p class="temp">34F</p>
       </section>
       <section class="day-weather">
         <p class="weekday">Tuesday</p>
-        <p class="icon">FF</p>
+        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
         <p class="temp">34F</p>
       </section>
       <section class="day-weather">
         <p class="weekday">Tuesday</p>
-        <p class="icon">FF</p>
+        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
         <p class="temp">34F</p>
       </section>
       <section class="day-weather">
         <p class="weekday">Tuesday</p>
-        <p class="icon">FF</p>
+        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
         <p class="temp">34F</p>
       </section>
       <section class="day-weather">
         <p class="weekday">Tuesday</p>
-        <p class="icon">FF</p>
+        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
         <p class="temp">34F</p>
       </section>
       <section class="day-weather">
         <p class="weekday">Tuesday</p>
-        <p class="icon">FF</p>
+        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
         <p class="temp">34F</p>
       </section>
     </section>
@@ -108,6 +108,18 @@ export default {
 
     .go-back {
       font-weight: bolder;
+      display: flex;
+      cursor: pointer;
+
+      .icon-back {
+        font-size: 2.5rem;
+        margin-right: 1rem;
+      }
+    }
+
+    .switch {
+      cursor: pointer;
+      font-size: 5rem;
     }
   }
 
@@ -132,6 +144,11 @@ export default {
     .week {
       font-size: 1.6rem;
       margin-left: 2rem;
+
+      table td {
+        text-align: left;
+        padding-left: 2rem;
+      }
     }
   }
 

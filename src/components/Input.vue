@@ -1,7 +1,7 @@
 <template>
   <section class="search-form">
     <input type="text" v-model="city" placeholder="City" class="search" />
-    <button @click="updateCity" class="search-button">O</button>
+    <span class="material-icons icon-search" @click="updateCity">search</span>
     <p>or</p>
     <p>use my current <a href="#">position</a></p>
   </section>
@@ -39,6 +39,7 @@ export default {
     padding: 1rem 0;
     background: transparent;
     transition: border-color 0.2s;
+    text-align: center;
 
     &::placeholder {
       text-align: center;
@@ -56,11 +57,13 @@ export default {
     margin-bottom: 2rem;
   }
 
-  .search-button {
-    border: 0;
+  .icon-search {
     background-color: transparent;
-    font-size: 2rem;
-    margin-left: -2rem;
+    font-size: 3rem;
+    margin-left: -3rem;
+    position: relative;
+    top: 1rem;
+    cursor: pointer;
   }
 }
 </style>

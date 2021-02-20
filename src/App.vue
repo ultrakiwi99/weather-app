@@ -22,6 +22,12 @@ export default {
   box-sizing: border-box;
 }
 
+html {
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+  }
+}
+
 body {
   background: pink;
   padding: 5rem;

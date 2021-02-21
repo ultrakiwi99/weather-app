@@ -3,7 +3,7 @@
     <section class="day-weather" v-for="(day, idx) in forecast" :key="idx">
       <Weekday :timestamp="day.date" />
       <WeatherIcon :description="day.condition" />
-      <p class="temp">{{ day.daytemp.day }}</p>
+      <p class="temp">{{ day.daytemp.day }} <Unit :units="units" /></p>
     </section>
   </section>
 </template>
@@ -11,12 +11,14 @@
 <script>
 import WeatherIcon from "./WeatherIcon";
 import Weekday from "./WeekDay";
+import Unit from "./Unit";
 
 export default {
-  components: { WeatherIcon, Weekday },
+  components: { WeatherIcon, Weekday, Unit },
   name: "Forecast",
   props: {
-    forecast: Array
+    forecast: Array,
+    units: String
   },
   methods: {
     weekday(timestamp) {

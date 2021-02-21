@@ -1,12 +1,16 @@
 <template>
-  <section class="temp">{{ currentTemp }}</section>
+  <section class="temp">{{ currentTemp }} <Unit :units="units" /></section>
 </template>
 
 <script>
+import Unit from "./Unit";
+
 export default {
   name: "CurrentTemp",
+  components: { Unit },
   props: {
-    daytemp: Object
+    daytemp: Object,
+    units: String
   },
   computed: {
     currentTemp() {

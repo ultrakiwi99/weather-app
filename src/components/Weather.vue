@@ -5,13 +5,17 @@
         <span class="material-icons icon-back">west</span> {{ weather.city }}
       </section>
       <section>
-        <span class="material-icons switch">toggle_off</span>
+        <Unit :units="units" /><span
+          @click="$emit('toggleUnits')"
+          class="material-icons switch"
+          >{{ units === "metric" ? "toggle_off" : "toggle_on" }}</span
+        >
       </section>
     </nav>
     <p class="time">{{ formattedDate }}</p>
     <p class="conditions">{{ weather.condition }}</p>
     <section class="info">
-      <CurrentTemp :daytemp="weather.daytemp" />
+      <CurrentTemp :daytemp="weather.daytemp" :units="units" />
       <section class="icon">
         <WeatherIcon :description="weather.condition" />
       </section>
@@ -19,7 +23,7 @@
         <DayTemp :daytemp="weather.daytemp" />
       </section>
     </section>
-    <Forecast :forecast="forecast" />
+    <Forecast :forecast="forecast" :units="units" />
   </section>
 </template>
 
@@ -28,13 +32,15 @@ import DayTemp from "./DayTemp";
 import Forecast from "./Forecast";
 import WeatherIcon from "./WeatherIcon";
 import CurrentTemp from "./CurrentTemp";
+import Unit from "./Unit";
 
 export default {
-  components: { DayTemp, Forecast, WeatherIcon, CurrentTemp },
+  components: { DayTemp, Forecast, WeatherIcon, CurrentTemp, Unit },
   props: {
     weather: Object,
     forecast: Array,
-    date: Date
+    date: Date,
+    units: String
   },
   computed: {
     formattedDate() {
@@ -88,6 +94,10 @@ export default {
     .switch {
       cursor: pointer;
       font-size: 5rem;
+    }
+
+    .unit {
+      font-size: 6rem;
     }
   }
 

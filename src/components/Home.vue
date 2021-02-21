@@ -5,7 +5,9 @@
       :weather="weather"
       :date="date"
       :forecast="forecast"
-      @closeWeather="weather = null"
+      :units="units"
+      @closeWeather="removeWeather"
+      @toggleUnits="toggleUnits"
     />
     <Error
       v-else-if="error !== null"
@@ -35,7 +37,7 @@ export default {
     };
   },
   methods: {
-    async searchWeather(payload) {      
+    async searchWeather(payload) {
       const result = await getForecast({
         name: payload,
         units: this.units
@@ -47,6 +49,17 @@ export default {
 
       this.weather = result.weather;
       this.forecast = result.forecast;
+    },
+    removeWeather() {
+      this.weather = null;
+      this.forecast = [];
+    },
+    toggleUnits() {
+      this.units === "metric"
+        ? (this.units = "imperial")
+        : (this.units = "metric");
+      const city = this.weather.city;
+      this.searchWeather(city);
     }
   }
 };

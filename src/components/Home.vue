@@ -14,7 +14,12 @@
       :error="error"
       @closeError="error = null"
     />
-    <Input v-else @search="searchWeather" />
+    <Input
+      v-else
+      @search="searchWeather"
+      @updateLoc="searchLoc"
+      @locError="setError"
+    />
   </section>
 </template>
 
@@ -49,6 +54,23 @@ export default {
 
       this.weather = result.weather;
       this.forecast = result.forecast;
+    },
+    async searchLoc(lat, long) {
+      const result = await getForecast({
+        lat,
+        long,
+        units: this.units
+      });
+      if (result.error) {
+        this.error = result.error;
+        return;
+      }
+
+      this.weather = result.weather;
+      this.forecast = result.forecast;
+    },
+    setError(payload) {
+      this.error = payload;
     },
     removeWeather() {
       this.weather = null;

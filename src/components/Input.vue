@@ -2,8 +2,10 @@
   <section class="search-form">
     <input type="text" v-model="city" placeholder="City" class="search" />
     <span class="material-icons icon-search" @click="updateCity">search</span>
-    <p>or</p>
-    <p>use my current <a href="#">position</a></p>
+    <section>
+      <p>or</p>
+      <p>use my current <a href="#" @click="updateLoc">position</a></p>
+    </section>
   </section>
 </template>
 
@@ -20,6 +22,22 @@ export default {
       if (this.city.length > 0) {
         this.$emit("search", this.city);
       }
+    },
+    updateLoc() {
+      navigator.geolocation.getCurrentPosition(
+        position =>
+          this.$emit(
+            "updateLoc",
+            position.coords.latitude,
+            position.coords.longitude
+          ),
+        error => this.$emit("locError", error.message)
+      );
+    }
+  },
+  computed: {
+    hasGeoLoc() {
+      return !!navigator.geolocation;
     }
   }
 };

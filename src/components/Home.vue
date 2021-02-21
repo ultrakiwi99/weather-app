@@ -3,6 +3,8 @@
     <Weather
       v-if="weather !== null"
       :weather="weather"
+      :date="date"
+      :forecast="forecast"
       @closeWeather="weather = null"
     />
     <Error
@@ -18,7 +20,8 @@
 import Input from "./Input.vue";
 import Error from "./Error.vue";
 import Weather from "./Weather.vue";
-import currentWeather from "./../stubs/currentWeather";
+import currentWeather from "./../stubs/weather";
+import forecast from "./../stubs/forecast";
 
 export default {
   components: { Weather, Error, Input },
@@ -26,18 +29,23 @@ export default {
   data() {
     return {
       weather: null,
-      error: null
+      forecast: [],
+      error: null,
+      date: new Date()
     };
   },
   methods: {
     searchWeather(payload) {
       const res = this.getWeatherFromApi(payload);
+      const forecast = this.getForecast();
+
       switch (res.cod) {
         case "404":
           this.error = res.message;
           break;
         default:
           this.weather = res;
+          this.forecast = forecast;
       }
     },
     getWeatherFromApi(payload) {
@@ -46,6 +54,9 @@ export default {
       }
 
       return { cod: "404", message: "Not found" };
+    },
+    getForecast() {
+      return forecast;
     }
   }
 };

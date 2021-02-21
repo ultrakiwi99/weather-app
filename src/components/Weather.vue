@@ -2,84 +2,49 @@
   <section class="weather-wrapper">
     <nav class="controls">
       <section class="go-back" @click="$emit(`closeWeather`)">
-        <span class="material-icons icon-back">west</span> Tallin
+        <span class="material-icons icon-back">west</span> {{ weather.city }}
       </section>
       <section>
         <span class="material-icons switch">toggle_off</span>
       </section>
     </nav>
-    <p class="time">Tuesday, December 6th 2016</p>
-    <p class="conditions">Light snow</p>
+    <p class="time">{{ formattedDate }}</p>
+    <p class="conditions">{{ weather.condition }}</p>
     <section class="info">
-      <section class="temp">39F</section>
-      <section class="icon"><i class="wi wi-day-sunny"></i></section>
-      <section class="week">
-        <table>
-          <tbody>
-            <tr>
-              <td>Morning</td>
-              <td>33F</td>
-            </tr>
-            <tr>
-              <td>Day</td>
-              <td>45F</td>
-            </tr>
-            <tr>
-              <td>Evening</td>
-              <td>45F</td>
-            </tr>
-            <tr>
-              <td>Night</td>
-              <td>45F</td>
-            </tr>
-          </tbody>
-        </table>
+      <section class="temp">{{ weather.temp }}</section>
+      <section class="icon">
+        <WeatherIcon :description="weather.condition" />
+      </section>
+      <section class="daytemp">
+        <DayTemp :daytemp="weather.daytemp" />
       </section>
     </section>
-    <section class="next-days">
-      <section class="day-weather">
-        <p class="weekday">Tuesday</p>
-        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
-        <p class="temp">34F</p>
-      </section>
-      <section class="day-weather">
-        <p class="weekday">Tuesday</p>
-        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
-        <p class="temp">34F</p>
-      </section>
-      <section class="day-weather">
-        <p class="weekday">Tuesday</p>
-        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
-        <p class="temp">34F</p>
-      </section>
-      <section class="day-weather">
-        <p class="weekday">Tuesday</p>
-        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
-        <p class="temp">34F</p>
-      </section>
-      <section class="day-weather">
-        <p class="weekday">Tuesday</p>
-        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
-        <p class="temp">34F</p>
-      </section>
-      <section class="day-weather">
-        <p class="weekday">Tuesday</p>
-        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
-        <p class="temp">34F</p>
-      </section>
-      <section class="day-weather">
-        <p class="weekday">Tuesday</p>
-        <p class="icon"><i class="wi wi-day-cloudy"></i></p>
-        <p class="temp">34F</p>
-      </section>
-    </section>
+    <Forecast :forecast="forecast" />
   </section>
 </template>
 
 <script>
+import DayTemp from "./DayTemp";
+import Forecast from "./Forecast";
+import WeatherIcon from "./WeatherIcon";
+
 export default {
+  components: { DayTemp, Forecast, WeatherIcon },
   props: {
-    weather: Object
+    weather: Object,
+    forecast: Array,
+    date: Date
+  },
+  computed: {
+    formattedDate() {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      };
+      return new Intl.DateTimeFormat("en-US", options).format(this.date);
+    }
   },
   name: "Weather"
 };
@@ -130,6 +95,10 @@ export default {
     font-weight: 300;
   }
 
+  .conditions {
+    text-transform: capitalize;
+  }
+
   .info {
     display: flex;
     justify-content: flex-start;
@@ -152,53 +121,9 @@ export default {
       font-size: 9rem;
       margin-left: 2rem;
     }
-    .week {
+    .daytemp {
       font-size: 1.6rem;
       margin-left: 2rem;
-
-      table td {
-        text-align: left;
-        padding-left: 2rem;
-
-        @media screen and (max-width: 414px) {
-          padding: 0;
-        }
-      }
-    }
-  }
-
-  .next-days {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    @media screen and (max-width: 414px) {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .day-weather {
-      font-size: 1rem;
-      line-height: 2.6rem;
-      text-align: center;
-
-      p {
-        text-align: center;
-      }
-
-      @media screen and (max-width: 414px) {
-        min-width: 8rem;
-        margin-top: auto;
-      }
-
-      .icon {
-        font-size: 3rem;
-        text-align: center;
-      }
-      .temp {
-        text-align: center;
-      }
     }
   }
 }

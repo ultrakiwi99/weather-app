@@ -47,8 +47,10 @@ body {
   text-align: center;
   color: #2c3e50;
   background: white;
-  width: clamp(340px 60rem 80rem);
   height: 80vh;
+  max-width: 70rem;
+  margin-left: auto;
+  margin-right: auto;
 
   @media screen and (max-width: 414px) {
     height: 100vh;

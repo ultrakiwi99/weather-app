@@ -26,11 +26,18 @@ html {
   @media screen and (max-width: 768px) {
     font-size: 12px;
   }
+  @media screen and (max-width: 414px) {
+    font-size: 10px;
+  }
 }
 
 body {
   background: pink;
   padding: 5rem;
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
 }
 
 #app {
@@ -42,5 +49,9 @@ body {
   background: white;
   width: clamp(340px 60rem 80rem);
   height: 80vh;
+
+  @media screen and (max-width: 414px) {
+    height: 100vh;
+  }
 }
 </style>

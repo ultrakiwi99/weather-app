@@ -14,12 +14,7 @@
       :error="error"
       @closeError="error = null"
     />
-    <Input
-      v-else
-      @search="searchWeather"
-      @updateLoc="searchLoc"
-      @locError="setError"
-    />
+    <Input v-else @search="setCity" @updateLoc="setLoc" @locError="setError" />
   </section>
 </template>
 
@@ -38,13 +33,36 @@ export default {
       forecast: [],
       error: null,
       date: new Date(),
-      units: "metric"
+      units: "metric",
+      city: null,
+      lat: null,
+      long: null
     };
   },
   methods: {
-    async searchWeather(payload) {
+    setCity(city) {
+      this.city = city;
+      this.lat = null;
+      this.long = null;
+      this.searchWeather();
+    },
+    setLoc(lat, long) {
+      this.lat = lat;
+      this.long = long;
+      this.city = null;
+      this.searchWeather();
+    },
+    setError(error) {
+      this.city = null;
+      this.lat = null;
+      this.long = null;
+      this.error = error;
+    },
+    async searchWeather() {
       const result = await getForecast({
-        name: payload,
+        city: this.city,
+        lat: this.lat,
+        long: this.long,
         units: this.units
       });
       if (result.error) {
@@ -54,23 +72,6 @@ export default {
 
       this.weather = result.weather;
       this.forecast = result.forecast;
-    },
-    async searchLoc(lat, long) {
-      const result = await getForecast({
-        lat,
-        long,
-        units: this.units
-      });
-      if (result.error) {
-        this.error = result.error;
-        return;
-      }
-
-      this.weather = result.weather;
-      this.forecast = result.forecast;
-    },
-    setError(payload) {
-      this.error = payload;
     },
     removeWeather() {
       this.weather = null;

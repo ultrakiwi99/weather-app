@@ -20,8 +20,7 @@
 import Input from "./Input.vue";
 import Error from "./Error.vue";
 import Weather from "./Weather.vue";
-import currentWeather from "./../stubs/weather";
-import forecast from "./../stubs/forecast";
+import { getForecast } from "./../api/api";
 
 export default {
   components: { Weather, Error, Input },
@@ -31,32 +30,23 @@ export default {
       weather: null,
       forecast: [],
       error: null,
-      date: new Date()
+      date: new Date(),
+      units: "metric"
     };
   },
   methods: {
-    searchWeather(payload) {
-      const res = this.getWeatherFromApi(payload);
-      const forecast = this.getForecast();
-
-      switch (res.cod) {
-        case "404":
-          this.error = res.message;
-          break;
-        default:
-          this.weather = res;
-          this.forecast = forecast;
-      }
-    },
-    getWeatherFromApi(payload) {
-      if (payload === "Moscow") {
-        return currentWeather;
+    async searchWeather(payload) {      
+      const result = await getForecast({
+        name: payload,
+        units: this.units
+      });
+      if (result.error) {
+        this.error = result.error;
+        return;
       }
 
-      return { cod: "404", message: "Not found" };
-    },
-    getForecast() {
-      return forecast;
+      this.weather = result.weather;
+      this.forecast = result.forecast;
     }
   }
 };

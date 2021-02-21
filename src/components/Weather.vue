@@ -11,7 +11,7 @@
     <p class="time">{{ formattedDate }}</p>
     <p class="conditions">{{ weather.condition }}</p>
     <section class="info">
-      <section class="temp">{{ weather.temp }}</section>
+      <CurrentTemp :daytemp="weather.daytemp" />
       <section class="icon">
         <WeatherIcon :description="weather.condition" />
       </section>
@@ -27,9 +27,10 @@
 import DayTemp from "./DayTemp";
 import Forecast from "./Forecast";
 import WeatherIcon from "./WeatherIcon";
+import CurrentTemp from "./CurrentTemp";
 
 export default {
-  components: { DayTemp, Forecast, WeatherIcon },
+  components: { DayTemp, Forecast, WeatherIcon, CurrentTemp },
   props: {
     weather: Object,
     forecast: Array,
@@ -114,9 +115,6 @@ export default {
       flex: 2;
     }
 
-    .temp {
-      font-size: 9rem;
-    }
     .icon {
       font-size: 9rem;
       margin-left: 2rem;

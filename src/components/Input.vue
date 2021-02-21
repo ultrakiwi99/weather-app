@@ -17,7 +17,9 @@ export default {
   },
   methods: {
     updateCity() {
-      this.$emit("search", this.city);
+      if (this.city.length > 0) {
+        this.$emit("search", this.city);
+      }
     }
   }
 };

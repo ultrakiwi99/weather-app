@@ -10,10 +10,10 @@ export default {
   },
   computed: {
     iconClass() {
-        if (!this.description) {
-            return "wi wi-na";
-        }
-        
+      if (!this.description) {
+        return "wi wi-na";
+      }
+
       switch (true) {
         case this.description.includes("sun"):
           return "wi wi-day-sunny";

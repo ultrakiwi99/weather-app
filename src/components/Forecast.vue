@@ -1,21 +1,28 @@
 <template>
   <section class="next-days">
     <section class="day-weather" v-for="(day, idx) in forecast" :key="idx">
-      <p class="weekday">{{ day.weekday }}</p>
+      <Weekday :timestamp="day.date" />
       <WeatherIcon :description="day.condition" />
-      <p class="temp">{{ day.temp }}</p>
+      <p class="temp">{{ day.daytemp.day }}</p>
     </section>
   </section>
 </template>
 
 <script>
 import WeatherIcon from "./WeatherIcon";
+import Weekday from "./WeekDay";
 
 export default {
-  components: { WeatherIcon },
+  components: { WeatherIcon, Weekday },
   name: "Forecast",
   props: {
     forecast: Array
+  },
+  methods: {
+    weekday(timestamp) {
+      console.log(new Date(timestamp).getDate());
+      return this.weekdays[new Date(timestamp).getDay()];
+    }
   }
 };
 </script>

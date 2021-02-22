@@ -23,6 +23,11 @@ import Input from "./Input.vue";
 import Error from "./Error.vue";
 import Weather from "./Weather.vue";
 import { getForecast } from "./../api/api";
+import {
+  storageExists,
+  getFromStorage,
+  saveToStorage
+} from "./../storage/storage";
 
 export default {
   components: { Weather, Error, Input },
@@ -38,6 +43,21 @@ export default {
       lat: null,
       long: null
     };
+  },
+  created() {
+    if (storageExists()) {
+      const stateData = getFromStorage();      
+      if (stateData !== null) {
+        this.weather = stateData.weather;
+        this.forecast = stateData.forecast;
+        this.error = stateData.error;
+        this.units = stateData.units;
+        this.city = stateData.city;
+        this.lat = stateData.lat;
+        this.long = stateData.long;
+        this.searchWeather();
+      }
+    }
   },
   methods: {
     setCity(city) {
@@ -72,6 +92,7 @@ export default {
 
       this.weather = result.weather;
       this.forecast = result.forecast;
+      this.setStorage();
     },
     removeWeather() {
       this.weather = null;
@@ -83,6 +104,19 @@ export default {
         : (this.units = "metric");
       const city = this.weather.city;
       this.searchWeather(city);
+    },
+    setStorage() {
+      if (storageExists()) {
+        saveToStorage({
+          weather: this.weather,
+          forecast: this.forecast,
+          error: this.error,
+          units: this.units,
+          city: this.city,
+          lat: this.lat,
+          long: this.long
+        });
+      }
     }
   }
 };

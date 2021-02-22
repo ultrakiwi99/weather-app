@@ -8,7 +8,6 @@ export async function getForecast(params) {
       error: fromApi.message
     };
   }
-
   return apiReponseToWeatherFacade(fromApi);
 }
 
@@ -37,7 +36,6 @@ async function getFromApiLocForecast(params) {
 }
 
 function apiReponseToWeatherFacade(fromApi) {
-  console.log(fromApi);
   const city = fromApi.city ? fromApi.city.name : fromApi.name;
   const forecast = fromApi.list.map(item => ({
     city,
